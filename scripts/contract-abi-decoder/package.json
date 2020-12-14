@@ -1,0 +1,16 @@
+{
+  "name": "contract-abi-decoder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "abi-decoder": "^2.3.0",
+    "web3": "^1.2.11",
+    "web3-eth-abi": "^1.2.11"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "bird-protocol",
+  "version": "1.0.0",
+  "description": "",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wific0in/bird-protocol.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wific0in/bird-protocol/issues"
+  },
+  "homepage": "https://github.com/wific0in/bird-protocol#readme",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.0.43",
+    "axios": "^0.20.0",
+    "dotenv": "^8.2.0",
+    "sol-merger": "^3.1.0"
+  }
+}
