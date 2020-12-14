@@ -1,0 +1,97 @@
+Join and supply in USDC market place (from supplier account: 0xe84FED3f27F67a3203DAe1D92E74799Aa21C2022)
+
+USDC Token (FaucetToken Tesnet token): 0xb7a4f3e9097c08da09517b5ab877f7a917224ede
+    - call allocateTo function to get the testing USDC token
+        0x0D6FC958b2F330580cBC9F3712C9374A9FaCAA65, 50000000000 (i.e. 50000)
+    - call approve with maxium value 
+        0x00BB57AD15Aae0B3AC3A39785EA76251075d31f3, 115792089237316195423570985008687907853269984665640564039457584007913129639935
+
+bUSDC Token (BErc20USDCDelegator): 0x00BB57AD15Aae0B3AC3A39785EA76251075d31f3
+    - call mint to exchange the USDC to bUSDC tokens
+        10000000000 (i.e. 10000)
+    
+    transaction success
+        https://kovan.etherscan.io/tx/0x19c7e6f432c2560196b2128144df5a7f1f143d5683ca9fbd324d2253670a02f7
+
+        sent 10,000 USDC, and got 500,000 bUSDC tokens
+
+---------------------------------------------------------------
+
+Join and supply in USDT market place (from 2nd supplier account: 0xe45D0875C9D5488Ebb099611e4d59157724C4123)
+
+USDT Token (TetherToken Testnet token): 0x327b9f578ff5801f37b4f0f9a36e196caf415113
+    - get USDT token
+    - call approve with maximum value
+        0xd7EFa96c55144bbeD0661a676BBaEe523c40BD31, 115792089237316195423570985008687907853269984665640564039457584007913129639935
+
+bUSDT Token (PErc20Delegator): 0xd7EFa96c55144bbeD0661a676BBaEe523c40BD31
+    - call mint to exchange the USDT to bUSDT tokens
+        1000000000 (i.e. 1000)
+
+    transaction success
+        https://kovan.etherscan.io/tx/0x34fc492500b38204e9740e616633023b26ffb4275cb30ce1069f5e3617e676d5
+    
+        sent 1,000 USDT, and got 50,000 bUSDT tokens 
+
+-----------------------------------------------------------------
+
+Now, let's try to borrow USDT from 1st supplier account: 0xe84FED3f27F67a3203DAe1D92E74799Aa21C2022
+
+BirdCore: 0x8C42cD47e0d6657C55ADE7fBfc38dFca11c089AD (Write as Proxy)
+    - call enterMarkets([bToken]) to add assets to be included in account liquidity calculation
+            [0x00BB57AD15Aae0B3AC3A39785EA76251075d31f3]
+
+    - call getAccountLiquidity(supplier) to determine the current account liquidity wrt collateral requirements
+            error :  0
+            liquidity :  7500000000000000000000
+            shortfall :  0
+
+bUSDT Token (PErc20Delegator): 0xd7EFa96c55144bbeD0661a676BBaEe523c40BD31
+    - call borrow to get USDT token using the collateral value
+        1000000000 (i.e. 1000)
+    
+        transaction success
+        https://kovan.etherscan.io/tx/0xca094f3ab850201e94907274a65cc55b5bb7fbf8ba3323652230801ab030a111
+        
+-------------------------------------------------------------------
+
+Widthdraw in USDC market place (from 1st supplier account: 0xe84FED3f27F67a3203DAe1D92E74799Aa21C2022)
+
+bUSDC Token (BErc20USDCDelegator): 0x00BB57AD15Aae0B3AC3A39785EA76251075d31f3
+    - call redeemUnderlying with 50% supplied token amount to withdraw from market pool
+        5000000000 (i.e. 5000)
+    
+    transaction success
+        https://kovan.etherscan.io/tx/0x3d72aa689e7339ea9e6a25dc0a0231d098e19b7bbc2a34a352aa96126404bf46
+
+        got 5,000 USDC, and market has tokens 250,000 bUSDC tokens from account
+
+
+----------------------------------------------------------------------
+
+Repay the borrowed USDT tokens back to bUSDT market from 1st supplier account: 0xe84FED3f27F67a3203DAe1D92E74799Aa21C2022
+    
+USDT Token (TetherToken Testnet token): 0x327b9f578ff5801f37b4f0f9a36e196caf415113
+    - call allowance (supplier, bUSDT) to check if user is enabled the option in BAT to repay the amount
+        0xe84FED3f27F67a3203DAe1D92E74799Aa21C2022, 0xd7EFa96c55144bbeD0661a676BBaEe523c40BD31
+    - call approve with maximum value (Enable Repay amount)
+        0xd7EFa96c55144bbeD0661a676BBaEe523c40BD31, 115792089237316195423570985008687907853269984665640564039457584007913129639935
+
+bUSDT Token (PErc20Delegator): 0xd7EFa96c55144bbeD0661a676BBaEe523c40BD31
+    - call repayBorrow and repay 50% of borrow amount
+        500000000 (i.e. 500)
+
+    transaction success
+        https://kovan.etherscan.io/tx/0xff963450d097a0dfc81f6b2352f935f3b834e08b7894f8bd54eb4da4095aa98b
+
+        sent 500 USDT token as repaying amount
+
+    - call borrowBalanceStored(supplier) to get the borrow balance of account based on stored data
+        Calculated balance: 500061453
+
+BirdCore: 0x8C42cD47e0d6657C55ADE7fBfc38dFca11c089AD (Write as Proxy)
+
+    - call getAccountLiquidity(supplier) to determine the current account liquidity wrt collateral requirements
+            error :  0
+            liquidity :  3249938547000000000000
+            shortfall :  0

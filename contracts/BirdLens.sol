@@ -13,7 +13,7 @@ interface BControllerLensInterface {
     function oracle() external view returns (PriceOracle);
     function getAccountLiquidity(address) external view returns (uint, uint, uint);
     function getAssetsIn(address) external view returns (BToken[] memory);
-    function claimBird(address) external;
+    function claimBirdPlus(address) external;
     function birdAccrued(address) external view returns (uint);
 }
 
@@ -181,7 +181,7 @@ contract BirdLens {
 
     function getBirdBalanceMetadataExt(BirdPlus birdPlus, BControllerLensInterface bController, address account) external returns (BirdBalanceMetadataExt memory) {
         uint balance = birdPlus.balanceOf(account);
-        bController.claimBird(account);
+        bController.claimBirdPlus(account);
         uint newBalance = birdPlus.balanceOf(account);
         uint accrued = bController.birdAccrued(account);
         uint total = add(accrued, newBalance, "sum birdPlus total");

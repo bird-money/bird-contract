@@ -6,7 +6,7 @@ const BErc20WBTCDelegator = artifacts.require("BErc20WBTCDelegator");
 const BirdCore = artifacts.require("BirdCore");
 const JumpRateModel = artifacts.require("JumpRateModel");
 
-// Admin address for deploying pWBTC
+// Admin address for deploying bWBTC
 const ADMIN_ADDRESS = "0x6f20FEeECcd51783779Ca10431b60B15f83d06F1"
 
 module.exports = async (deployer, network) => {
@@ -24,7 +24,7 @@ module.exports = async (deployer, network) => {
         JumpRateModel.address,
         "20000000000000000",
         "Bird WBTC",
-        "pWBTC",
+        "bWBTC",
         8,
         ADMIN_ADDRESS,
         BErc20WBTCDelegate.address,

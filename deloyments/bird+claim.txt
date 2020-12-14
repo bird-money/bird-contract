@@ -1,0 +1,59 @@
+BirdCore: 0x8C42cD47e0d6657C55ADE7fBfc38dFca11c089AD (Write as Proxy)
+    - call claimBirdPlus(holder) to add assets to be included in account liquidity calculation
+            0xe45D0875C9D5488Ebb099611e4d59157724C4123
+
+    https://kovan.etherscan.io/tx/0xc883dce419382687cf5c9c6412ec8374928d1aa80737ab6fb7362a7744d05cc9
+
+
+BirdLens: 0xcf9D1f3Dac1e1C5803e50aDAfe35c64155746458
+    Get the bird+ balance of the user:
+        getBirdBalanceMetadata(birdPlus, account)
+        0xC99F478c0A9018631D4247CD6E7A2B99107d09EE, 0xe45D0875C9D5488Ebb099611e4d59157724C4123
+        res: 1760000000000000000
+
+    Call getBirdBalanceMetadataExt(birdPlus, bController, account) using JSON-RCP
+        0xC99F478c0A9018631D4247CD6E7A2B99107d09EE, 0x8C42cD47e0d6657C55ADE7fBfc38dFca11c089AD, 0xe45D0875C9D5488Ebb099611e4d59157724C4123
+
+
+    curl --location --request POST 'https://kovan.infura.io/v3/a6b2363eab9b44cc90693103938e6841' --header 'Content-Type: application/json' --data-raw '{
+        "jsonrpc":"2.0",
+        "method":"eth_call",
+        "params":[{
+            "from": "0xe45D0875C9D5488Ebb099611e4d59157724C4123",
+            "to": "0xcf9D1f3Dac1e1C5803e50aDAfe35c64155746458",
+            "data" : "0xcc8e3f2b000000000000000000000000c99f478c0a9018631d4247cd6e7a2b99107d09ee0000000000000000000000008c42cd47e0d6657c55ade7fbfc38dfca11c089ad000000000000000000000000e45d0875c9d5488ebb099611e4d59157724c4123"
+        }, "latest"],
+        "id":1
+        }'
+
+    0x000000000000000000000000000000000000000000000000186cc6acd4b00000000000000000000000000000000000000000000000000001b2c36a0463700000
+    
+    https://www.rapidtables.com/convert/number/hex-to-decimal.html
+
+    Balance: 1678466796875
+    Yet to collect: 31328000000000000000
+
+=============
+
+BirdLens: 0xcf9D1f3Dac1e1C5803e50aDAfe35c64155746458
+
+    Call getBirdBalanceMetadataExt(birdPlus, bController, account) using JSON-RCP
+        0xC99F478c0A9018631D4247CD6E7A2B99107d09EE, 0x8C42cD47e0d6657C55ADE7fBfc38dFca11c089AD, 0xe84FED3f27F67a3203DAe1D92E74799Aa21C2022
+
+    curl --location --request POST 'https://kovan.infura.io/v3/a6b2363eab9b44cc90693103938e6841' --header 'Content-Type: application/json' --data-raw '{
+        "jsonrpc":"2.0",
+        "method":"eth_call",
+        "params":[{
+            "from": "0xe84FED3f27F67a3203DAe1D92E74799Aa21C2022",
+            "to": "0xcf9D1f3Dac1e1C5803e50aDAfe35c64155746458",
+            "data" : "0xcc8e3f2b000000000000000000000000c99f478c0a9018631d4247cd6e7a2b99107d09ee0000000000000000000000008c42cd47e0d6657c55ade7fbfc38dfca11c089ad000000000000000000000000e84fed3f27f67a3203dae1d92e74799aa21c2022"
+        }, "latest"],
+        "id":1
+        }'
+
+    0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000026510adf20da7ffff
+    
+    https://www.rapidtables.com/convert/number/hex-to-decimal.html
+
+    Balance: 0
+    Yet to collect: 44175999999999999999
