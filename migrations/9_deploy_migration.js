@@ -6,7 +6,7 @@ const BErc20USDCDelegator = artifacts.require("BErc20USDCDelegator");
 const BirdCore = artifacts.require("BirdCore");
 const JumpRateModel = artifacts.require("JumpRateModel");
 
-// Admin address for deploying pUSDC
+// Admin address for deploying bUSDC
 const ADMIN_ADDRESS = "0x6f20FEeECcd51783779Ca10431b60B15f83d06F1"
 
 module.exports = async (deployer, network) => {
@@ -24,7 +24,7 @@ module.exports = async (deployer, network) => {
         JumpRateModel.address,
         "200000000000000",
         "Bird USDC",
-        "pUSDC",
+        "bUSDC",
         8,
         ADMIN_ADDRESS,
         BErc20USDCDelegate.address,
