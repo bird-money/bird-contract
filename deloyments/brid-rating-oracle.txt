@@ -1,0 +1,14 @@
+
+
+    newChainRequest (_url, _key)
+        https://www.bird.money/analytics/address/0xe84fed3f27f67a3203dae1d92e74799aa21c2022
+        bird_rating
+
+    updatedChainRequest (_id, _valueResponse)
+        0
+        91000000000000000
+
+BirdCore: 0x8C42cD47e0d6657C55ADE7fBfc38dFca11c089AD (Write as Proxy)
+
+    _setBirdOracle
+        0x6D4A8a607DaC6748CB85dDf3783AC05E84CE8193
