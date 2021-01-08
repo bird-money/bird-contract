@@ -37,6 +37,9 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
     /// @notice Emitted when price oracle is changed
     event NewPriceOracle(PriceOracle oldPriceOracle, PriceOracle newPriceOracle);
 
+    /// @notice Emitted when bird oracle is changed
+    event NewBirdOracle(BirdOracle oldBirdOracle, BirdOracle newBirdOracle);
+
     /// @notice Emitted when pause guardian is changed
     event NewPauseGuardian(address oldPauseGuardian, address newPauseGuardian);
 
@@ -728,6 +731,9 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
         uint oErr;
         MathError mErr;
 
+        // Get the rating value from the BirdOracle for the account
+        uint ratingValue = birdOracle.getAddressRating(account);
+
         // For each asset the account is in
         BToken[] memory assets = accountAssets[account];
         for (uint i = 0; i < assets.length; i++) {
@@ -738,7 +744,12 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
             if (oErr != 0) { // semi-opaque error code, we assume NO_ERROR == 0 is invariant between upgrades
                 return (Error.SNAPSHOT_ERROR, 0, 0);
             }
-            vars.collateralFactor = Exp({mantissa: markets[address(asset)].collateralFactorMantissa});
+
+            // Add the rating value along with existing collateral value
+            uint newCollateralFactorMantissa = add(markets[address(asset)].collateralFactorMantissa, ratingValue);
+            vars.collateralFactor = Exp({mantissa: newCollateralFactorMantissa});
+            
+            //vars.collateralFactor = Exp({mantissa: markets[address(asset)].collateralFactorMantissa});
             vars.exchangeRate = Exp({mantissa: vars.exchangeRateMantissa});
 
             // Get the normalized price of the asset
@@ -747,7 +758,6 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
                 return (Error.PRICE_ERROR, 0, 0);
             }
             vars.oraclePrice = Exp({mantissa: vars.oraclePriceMantissa});
-
             // Pre-birdute a conversion factor from tokens -> ether (normalized price value)
             (mErr, vars.tokensToDenom) = mulExp3(vars.collateralFactor, vars.exchangeRate, vars.oraclePrice);
             if (mErr != MathError.NO_ERROR) {
@@ -790,6 +800,13 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
         } else {
             return (Error.NO_ERROR, 0, vars.sumBorrowPlusEffects - vars.sumCollateral);
         }
+    }
+
+    function add(uint a, uint b) internal pure returns (uint) {
+        uint256 c = a + b;
+        require(c >= a, "SafeMath: addition overflow");
+
+        return c;
     }
 
     /**
@@ -867,6 +884,20 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
         emit NewPriceOracle(oldOracle, newOracle);
 
         return uint(Error.NO_ERROR);
+    }
+
+    /**
+      * @notice Sets a new bird oracle for the bController
+      * @dev Admin function to set a new bird oracle
+      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+      */
+    function _setBirdOracle(BirdOracle newBirdOracle) public returns (uint) {
+        // Check caller is admin
+        if (msg.sender != admin) {
+            return fail(Error.UNAUTHORIZED, FailureInfo.SET_PRICE_ORACLE_OWNER_CHECK);
+        }
+        // Set bController's birdOracle to newBirdOracle
+        birdOracle = newBirdOracle;
     }
 
     /**
