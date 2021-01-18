@@ -2,7 +2,7 @@ pragma solidity ^0.5.16;
 
 import "./BToken.sol";
 import "./PriceOracle.sol";
-import "./BirdOracle.sol";
+import "./BirdOracleInterface.sol";
 
 contract BirdAdminStorage {
     /**
@@ -106,7 +106,7 @@ contract BControllerV3Storage is BControllerV2Storage {
 
     address birdAddress;
 
-    BirdOracle birdOracle;
+    BirdOracleInterface birdOracle;
 
     /// @notice A list of all markets
     BToken[] public allMarkets;
