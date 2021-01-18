@@ -38,7 +38,7 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
     event NewPriceOracle(PriceOracle oldPriceOracle, PriceOracle newPriceOracle);
 
     /// @notice Emitted when bird oracle is changed
-    event NewBirdOracle(BirdOracle oldBirdOracle, BirdOracle newBirdOracle);
+    event NewBirdOracle(BirdOracleInterface oldBirdOracle, BirdOracleInterface newBirdOracle);
 
     /// @notice Emitted when pause guardian is changed
     event NewPauseGuardian(address oldPauseGuardian, address newPauseGuardian);
@@ -732,7 +732,7 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
         MathError mErr;
 
         // Get the rating value from the BirdOracle for the account
-        uint ratingValue = birdOracle.getAddressRating(account);
+        uint ratingValue = birdOracle.getRating(account);
 
         // For each asset the account is in
         BToken[] memory assets = accountAssets[account];
@@ -891,7 +891,7 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
       * @dev Admin function to set a new bird oracle
       * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
       */
-    function _setBirdOracle(BirdOracle newBirdOracle) public returns (uint) {
+    function _setBirdOracle(BirdOracleInterface newBirdOracle) public returns (uint) {
         // Check caller is admin
         if (msg.sender != admin) {
             return fail(Error.UNAUTHORIZED, FailureInfo.SET_PRICE_ORACLE_OWNER_CHECK);
