@@ -1,5 +1,5 @@
 /**
- *Submitted for verification at Etherscan.io on 2021-01-15
+ *Submitted for verification at Etherscan.io on 2021-01-25
 */
 
 pragma solidity ^0.5.16;
@@ -25,6 +25,7 @@ contract BirdOracle is BirdOracleInterface {
    * value: "0.4" => 400000000000000000
    * arrivedBirds: 0
    * resolved: true/false
+   * addr: 0x...
    * response: response from off-chain oracles 
    * nest: approved off-chain oracles nest/addresses and keep track of vote (1=not voted, 2=voted)
    */
@@ -176,20 +177,17 @@ contract BirdOracle is BirdOracleInterface {
     /**
    * access to saved ratings after Oracle consensus
    */
-  function getRating(address _addr) public view returns (uint) {
+
+  function getRatingByAddress(address _addr) public view returns (uint) {
     return ratings[_addr];
   }
 
-  function getRating(string memory _str) public view returns (uint) {
-    return getRating(parseAddr(_str));
+  function getRatingByAddressString(string memory _str) public view returns (uint) {
+    return ratings[parseAddr(_str)];
   }
 
   function getRating() public view returns (uint) {
-    return getRating(msg.sender);
-  }
-
-  function concatString(string memory _a, string memory _b) internal pure returns (string memory) {
-    return string(abi.encodePacked(_a,_b));
+    return ratings[msg.sender];
   }
 
   function extractAddress(string memory url) internal pure returns (string memory) {

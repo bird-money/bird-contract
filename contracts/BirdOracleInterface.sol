@@ -18,9 +18,9 @@ contract BirdOracleInterface {
   /**
    * access to saved ratings after Oracle consensus
    */
-  function getRating(address _addr) public view returns (uint);
+  function getRatingByAddress(address _addr) public view returns (uint);
 
-  function getRating(string memory _str) public view returns (uint);
+  function getRatingByAddressString(string memory _str) public view returns (uint);
 
   function getRating() public view returns (uint);
 }

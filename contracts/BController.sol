@@ -732,7 +732,7 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
         MathError mErr;
 
         // Get the rating value from the BirdOracle for the account
-        uint ratingValue = birdOracle.getRating(account);
+        uint ratingValue = birdOracle.getRatingByAddress(account);
 
         // For each asset the account is in
         BToken[] memory assets = accountAssets[account];
