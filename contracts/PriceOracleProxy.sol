@@ -24,8 +24,8 @@ contract PriceOracleProxy is PriceOracle {
     /// @notice Address of the bUSDT contract, which uses the bUSDC price
     address public bUsdtAddress;
 
-    /// @notice Address of the pDAI contract, which we hand pick a key for
-    address public pDaiAddress;
+    /// @notice Address of the bDAI contract, which we hand pick a key for
+    address public bDaiAddress;
 
     /// @notice Handpicked key for USDC
     address public constant usdcOracleKey = address(1);
@@ -37,19 +37,19 @@ contract PriceOracleProxy is PriceOracle {
      * @param guardian_ The address of the guardian, which may set the SAI price once
      * @param v1PriceOracle_ The address of the v1 price oracle, which will continue to operate and hold prices for collateral assets
      * @param bUsdcAddress_ The address of bUSDC, which will be read from a special oracle key
-     * @param pDaiAddress_ The address of pDAI, which will be read from a special oracle key
+     * @param bDaiAddress_ The address of bDAI, which will be read from a special oracle key
      * @param bUsdtAddress_ The address of bUSDT, which uses the bUSDC price
      */
     constructor(address guardian_,
                 address v1PriceOracle_,
                 address bUsdcAddress_,
-                address pDaiAddress_,
+                address bDaiAddress_,
                 address bUsdtAddress_) public {
         guardian = guardian_;
         v1PriceOracle = V1PriceOracleInterface(v1PriceOracle_);
 
         bUsdcAddress = bUsdcAddress_;
-        pDaiAddress = pDaiAddress_;
+        bDaiAddress = bDaiAddress_;
         bUsdtAddress = bUsdtAddress_;
     }
 
@@ -65,7 +65,7 @@ contract PriceOracleProxy is PriceOracle {
             return v1PriceOracle.assetPrices(usdcOracleKey);
         }
 
-        if (bTokenAddress == pDaiAddress) {
+        if (bTokenAddress == bDaiAddress) {
             return v1PriceOracle.assetPrices(daiOracleKey);
         }
 

@@ -731,8 +731,7 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
         uint oErr;
         MathError mErr;
 
-        // Get the rating value from the BirdOracle for the account
-        uint ratingValue = birdOracle.getRatingByAddress(account);
+        uint ratingValue = getUserRating(account);
 
         // For each asset the account is in
         BToken[] memory assets = accountAssets[account];
@@ -800,6 +799,18 @@ contract BController is BControllerV3Storage, BControllerInterface, BControllerE
         } else {
             return (Error.NO_ERROR, 0, vars.sumBorrowPlusEffects - vars.sumCollateral);
         }
+    }
+
+    function getUserRating(address account) internal view returns (uint) {
+
+        // Get the rating value from the BirdOracle for the account
+        uint userRatingValue = birdOracle.getRatingByAddress(account);
+
+        if (userRatingValue > maxRatingValue) {
+            userRatingValue = maxRatingValue;
+        }
+
+        return userRatingValue / 10;
     }
 
     function add(uint a, uint b) internal pure returns (uint) {
