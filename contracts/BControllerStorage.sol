@@ -106,6 +106,8 @@ contract BControllerV3Storage is BControllerV2Storage {
 
     address birdAddress;
 
+    uint maxRatingValue = 100 * 10**uint256(18);
+
     BirdOracleInterface birdOracle;
 
     /// @notice A list of all markets
