@@ -22,7 +22,7 @@ module.exports = async (deployer, network) => {
         BIRD_TOKEN_ADDRESS,
         BirdCore.address,
         JumpRateModel.address,
-        "20000000000000000",
+        "200000000000000000000000000",
         "Bird BIRD",
         "bBIRD",
         8,
@@ -32,10 +32,10 @@ module.exports = async (deployer, network) => {
     );
 
     if (network !== "development")
-    await verify.etherscanVerify(
-        BErc20BIRDDelegator,
-        network,
-        process.env.ETHERSCAN_KEY,
-        1
-    );
+        await verify.etherscanVerify(
+            BErc20BIRDDelegator,
+            network,
+            process.env.ETHERSCAN_KEY,
+            1
+        );
 };
