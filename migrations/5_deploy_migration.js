@@ -4,7 +4,7 @@ const verify = require("../src/verify");
 const BirdPlus = artifacts.require("BirdPlus");
 
 // Address for transferring BirdPlus Token
-const ADMIN_ADDRESS = "0x6f20FEeECcd51783779Ca10431b60B15f83d06F1"
+const ADMIN_ADDRESS = "0xEe9A3468b9c0e6027C096929A4B402Ac4B2FE636"
 
 module.exports = async (deployer, network) => {
 
