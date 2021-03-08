@@ -6,7 +6,7 @@ const BirdCore = artifacts.require("BirdCore");
 const JumpRateModel = artifacts.require("JumpRateModel");
 
 // Admin address for deploying pEther
-const ADMIN_ADDRESS = "0xEe9A3468b9c0e6027C096929A4B402Ac4B2FE636"
+const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666"
 
 module.exports = async (deployer, network) => {
 
