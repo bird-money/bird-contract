@@ -1,50 +1,109 @@
 pragma solidity ^0.5.16;
 
+pragma experimental ABIEncoderV2;
+
 import "./PriceOracle.sol";
 import "./BErc20.sol";
 
 contract SimplePriceOracle is PriceOracle {
     address public admin;
     address public pendingAdmin;
-    mapping(address => uint) prices;
-    event PricePosted(address asset, uint previousPriceMantissa, uint requestedPriceMantissa, uint newPriceMantissa);
+    mapping(string => address) birdTokens;
+    mapping(address => uint256) prices;
+    event PricePosted(
+        string symbol,
+        address asset,
+        uint256 previousPriceMantissa,
+        uint256 requestedPriceMantissa,
+        uint256 newPriceMantissa
+    );
 
     constructor() public {
         admin = msg.sender;
     }
 
-    function getUnderlyingPrice(BToken bToken) public view returns (uint) {
+    function initialiseTokens(string[] memory symbols, address[] memory bTokens)
+        public
+    {
+        // Check caller = admin
+        require(msg.sender == admin);
+        require(symbols.length == bTokens.length);
+
+        // Associate symbols with tokens
+        for (uint256 i = 0; i < symbols.length; i++) {
+            birdTokens[symbols[i]] = bTokens[i];
+        }
+    }
+
+    function postPrices(string[] memory symbols, uint256[] memory priceMantissa)
+        public
+    {
+        // Check caller = admin
+        require(msg.sender == admin);
+        require(symbols.length == priceMantissa.length);
+
+        // Post prices
+        for (uint256 i = 0; i < symbols.length; i++) {
+            if (compareStrings(symbols[i], "ETH")) {
+                setDirectPrice(
+                    address(birdTokens[symbols[i]]),
+                    priceMantissa[i]
+                );
+            } else {
+                setUnderlyingPrice(
+                    BToken(birdTokens[symbols[i]]),
+                    priceMantissa[i]
+                );
+            }
+        }
+    }
+
+    function getUnderlyingPrice(BToken bToken) public view returns (uint256) {
         if (compareStrings(bToken.symbol(), "bETH")) {
-            return 1e18;
+            return prices[address(bToken)];
         } else {
             return prices[address(BErc20(address(bToken)).underlying())];
         }
     }
 
-    function setUnderlyingPrice(BToken bToken, uint underlyingPriceMantissa) public {
+    function setUnderlyingPrice(BToken bToken, uint256 underlyingPriceMantissa)
+        public
+    {
         // Check caller = admin
         require(msg.sender == admin);
 
         address asset = address(BErc20(address(bToken)).underlying());
-        emit PricePosted(asset, prices[asset], underlyingPriceMantissa, underlyingPriceMantissa);
+
+        emit PricePosted(
+            bToken.symbol(),
+            address(bToken),
+            prices[asset],
+            underlyingPriceMantissa,
+            underlyingPriceMantissa
+        );
         prices[asset] = underlyingPriceMantissa;
     }
 
-    function setDirectPrice(address asset, uint price) public {
+    function setDirectPrice(address asset, uint256 price) public {
         // Check caller = admin
         require(msg.sender == admin);
 
-        emit PricePosted(asset, prices[asset], price, price);
+        emit PricePosted("bETH", asset, prices[asset], price, price);
         prices[asset] = price;
     }
 
     // v1 price oracle interface for use as backing of proxy
-    function assetPrices(address asset) external view returns (uint) {
+    function assetPrices(address asset) external view returns (uint256) {
         return prices[asset];
     }
 
-    function compareStrings(string memory a, string memory b) internal pure returns (bool) {
-        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
+    function compareStrings(string memory a, string memory b)
+        internal
+        pure
+        returns (bool)
+    {
+        return (keccak256(abi.encodePacked((a))) ==
+            keccak256(abi.encodePacked((b))));
     }
 
     function _setPendingAdmin(address newPendingAdmin) public {
