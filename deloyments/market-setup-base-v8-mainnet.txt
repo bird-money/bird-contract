@@ -59,8 +59,8 @@ BirdCore: 0x980D11Ac1C26F737CA467BeC2c0ed292d06a258C (Write as Proxy)
         0xbced0066a6a3b7c633cbd8da0d53b6dcd9e0c352
     - call _setBirdPlusRate(birdRate)
         176000000000000000
-    - call _setBirdOracle TODO: (need to deploy and configure)
-        0x873C83291691eE1e8c840dFB463c2c75406f2b1d 
+    - call _setBirdOracle
+        0x8644dAC7E090bCE54Bb6c7260c7Eaf977b2984Af 
     - call _setLiquidationIncentive
         1080000000000000000
     - call _setPriceOracle(simplePriceOracle) 
