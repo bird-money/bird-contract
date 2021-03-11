@@ -26,6 +26,11 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
+    // dev: {
+    //   host: "127.0.0.1",
+    //   port: 7545,
+    //   network_id: "*" // Match any network id
+    // },
     development: {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
@@ -45,6 +50,14 @@ module.exports = {
       provider: () => providerFactory("kovan"),
       network_id: 42,       // Ropsten's id
       gas: 8500000,        // Ropsten has a lower block limit than mainnet
+      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true    // Skip dry run before migrations? (default: false for public nets )
+    },
+    mainnet: {
+      provider: () => providerFactory("mainnet"),
+      network_id: 1,       // Ropsten's id
+      gas: 9500000,        // Ropsten has a lower block limit than mainnet
+      gasPrice: 95000000000,
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true    // Skip dry run before migrations? (default: false for public nets )
     },

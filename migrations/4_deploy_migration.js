@@ -4,7 +4,7 @@ const verify = require("../src/verify");
 const Timelock = artifacts.require("Timelock");
 
 // Admin address for Timelock
-const ADMIN_ADDRESS = "0x6f20FEeECcd51783779Ca10431b60B15f83d06F1"
+const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666"
 
 module.exports = async (deployer, network) => {
 

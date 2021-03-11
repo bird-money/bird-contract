@@ -6,13 +6,13 @@ const BirdOracle = artifacts.require("BirdOracle");
 module.exports = async (deployer, network) => {
 
     // /* Deploy BirdOracle contract */
-    await deployer.deploy(BirdOracle);
+    // await deployer.deploy(BirdOracle);
 
-    if (network !== "development")
-        await verify.etherscanVerify(
-            BirdOracle,
-            network,
-            process.env.ETHERSCAN_KEY,
-            1
-        );
+    // if (network !== "development")
+    //     await verify.etherscanVerify(
+    //         BirdOracle,
+    //         network,
+    //         process.env.ETHERSCAN_KEY,
+    //         1
+    //     );
 };
