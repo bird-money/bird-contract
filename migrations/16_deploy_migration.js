@@ -10,13 +10,7 @@ const JumpRateModel = artifacts.require("JumpRateModel");
 const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666"
 
 module.exports = async (deployer, network) => {
-    let WBTC_TOKEN_ADDRESS = "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599";
-
-    // if (network === "kovan" || "development") {
-    //     WBTC_TOKEN_ADDRESS = "0xd3A691C852CDB01E281545A27064741F0B7f6825"
-    // }else if (network === "mainnet") {
-    //     WBTC_TOKEN_ADDRESS = "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599";
-    // }
+    let WBTC_TOKEN_ADDRESS = "0x3E090FfB054d69c32f8129D55F64B0047224204F";
 
     /* Deploy Bird WBTC */
     await deployer.deploy(
@@ -34,10 +28,10 @@ module.exports = async (deployer, network) => {
     );
 
     if (network !== "development")
-        await verify.etherscanVerify(
+        await verify.bscscanVerify(
             BErc20WBTCDelegator,
             network,
-            process.env.ETHERSCAN_KEY,
+            process.env.BSCSCANAPIKEY,
             1
         );
 };

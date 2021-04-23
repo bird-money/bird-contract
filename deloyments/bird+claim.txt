@@ -57,3 +57,17 @@ BirdLens: 0xcf9D1f3Dac1e1C5803e50aDAfe35c64155746458
 
     Balance: 0
     Yet to collect: 44175999999999999999
+
+
+    https://etherscan.io/address/0x736dd993a8ad7a04a9d270c716e7f322f1749c5f#code
+
+     curl --location --request POST 'https://mainnet.infura.io/v3/a6b2363eab9b44cc90693103938e6841' --header 'Content-Type: application/json' --data-raw '{
+        "jsonrpc":"2.0",
+        "method":"eth_call",
+        "params":[{
+            "from": "0x6a260a5105285398783ad6c6b8f0ece7aab9d78f",
+            "to": "0x736dD993A8aD7A04A9d270c716E7F322f1749C5f",
+            "data" : "0xcc8e3f2b000000000000000000000000bced0066a6a3b7c633cbd8da0d53b6dcd9e0c352000000000000000000000000980d11ac1c26f737ca467bec2c0ed292d06a258c0000000000000000000000006a260a5105285398783ad6c6b8f0ece7aab9d78f"
+        }, "latest"],
+        "id":1
+        }'

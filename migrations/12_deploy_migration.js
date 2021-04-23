@@ -10,13 +10,7 @@ const JumpRateModel = artifacts.require("JumpRateModel");
 const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666";
 
 module.exports = async (deployer, network) => {
-  let USDT_TOKEN_ADDRESS = "0xdac17f958d2ee523a2206206994597c13d831ec7";
-
-  //   if (network === "kovan" || "development") {
-  //     USDT_TOKEN_ADDRESS = "0x327b9f578ff5801f37b4f0f9a36e196caf415113";
-  //   } else if (network === "mainnet") {
-  //     USDT_TOKEN_ADDRESS = "0xdac17f958d2ee523a2206206994597c13d831ec7";
-  //   }
+  let USDT_TOKEN_ADDRESS = "0xe93e5891b1b757D51D20448F2803Db4Cd6f84233";
 
   /* Deploy Bird USDT */
   await deployer.deploy(
@@ -24,7 +18,7 @@ module.exports = async (deployer, network) => {
     USDT_TOKEN_ADDRESS,
     BirdCore.address,
     JumpRateModel.address,
-    "200000000000000",
+    "200000000000000000000000000",
     "Bird USDT",
     "bUSDT",
     8,
@@ -34,10 +28,10 @@ module.exports = async (deployer, network) => {
   );
 
   if (network !== "development")
-    await verify.etherscanVerify(
+    await verify.bscscanVerify(
       BErc20Delegator,
       network,
-      process.env.ETHERSCAN_KEY,
+      process.env.BSCSCANAPIKEY,
       1
     );
 };

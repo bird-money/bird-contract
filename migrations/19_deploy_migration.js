@@ -9,10 +9,10 @@ module.exports = async (deployer, network) => {
     await deployer.deploy(BErc20LINKDelegate);
 
     if (network !== "development")
-        await verify.etherscanVerify(
+        await verify.bscscanVerify(
             BErc20LINKDelegate,
             network,
-            process.env.ETHERSCAN_KEY,
+            process.env.BSCSCANAPIKEY,
             1
         );
 };

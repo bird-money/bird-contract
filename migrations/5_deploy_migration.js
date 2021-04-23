@@ -12,10 +12,10 @@ module.exports = async (deployer, network) => {
     /*await deployer.deploy(BirdPlus, ADMIN_ADDRESS);
 
     if (network !== "development")
-        await verify.etherscanVerify(
+        await verify.bscscanVerify(
             BirdPlus,
             network,
-            process.env.ETHERSCAN_KEY,
+            process.env.BSCSCANAPIKE,
             1
         ); */
 };

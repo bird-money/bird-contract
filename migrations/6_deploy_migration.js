@@ -9,10 +9,10 @@ module.exports = async (deployer, network) => {
     await deployer.deploy(BirdCore);
 
     if (network !== "development")
-        await verify.etherscanVerify(
+        await verify.bscscanVerify(
             BirdCore,
             network,
-            process.env.ETHERSCAN_KEY,
+            process.env.BSCSCANAPIKEY,
             1
         );
 };

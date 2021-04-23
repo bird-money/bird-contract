@@ -3,12 +3,12 @@ pragma solidity ^0.5.16;
 import "./BToken.sol";
 
 /**
- * @title Bird's BEther Contract
- * @notice BToken which wraps Ether
+ * @title Bird's BBNB Contract
+ * @notice BToken which wraps BNB
  */
-contract BEther is BToken {
+contract BBNB is BToken {
     /**
-     * @notice Construct a new BEther money market
+     * @notice Construct a new BBNB money market
      * @param bController_ The address of the Comptroller
      * @param interestRateModel_ The address of the interest rate model
      * @param initialExchangeRateMantissa_ The initial exchange rate, scaled by 1e18
@@ -17,22 +17,30 @@ contract BEther is BToken {
      * @param decimals_ ERC-20 decimal precision of this token
      * @param admin_ Address of the administrator of this token
      */
-    constructor(BControllerInterface bController_,
-                InterestRateModel interestRateModel_,
-                uint initialExchangeRateMantissa_,
-                string memory name_,
-                string memory symbol_,
-                uint8 decimals_,
-                address payable admin_) public {
+    constructor(
+        BControllerInterface bController_,
+        InterestRateModel interestRateModel_,
+        uint256 initialExchangeRateMantissa_,
+        string memory name_,
+        string memory symbol_,
+        uint8 decimals_,
+        address payable admin_
+    ) public {
         // Creator of the contract is admin during initialization
         admin = msg.sender;
 
-        initialize(bController_, interestRateModel_, initialExchangeRateMantissa_, name_, symbol_, decimals_);
+        initialize(
+            bController_,
+            interestRateModel_,
+            initialExchangeRateMantissa_,
+            name_,
+            symbol_,
+            decimals_
+        );
 
         // Set the proper admin now that initialization is done
         admin = admin_;
     }
-
 
     /*** User Interface ***/
 
@@ -41,7 +49,7 @@ contract BEther is BToken {
      * @dev Reverts upon any failure
      */
     function mint() external payable {
-        (uint err,) = mintInternal(msg.value);
+        (uint256 err, ) = mintInternal(msg.value);
         requireNoError(err, "mint failed");
     }
 
@@ -51,7 +59,7 @@ contract BEther is BToken {
      * @param redeemTokens The number of bTokens to redeem into underlying
      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
      */
-    function redeem(uint redeemTokens) external returns (uint) {
+    function redeem(uint256 redeemTokens) external returns (uint256) {
         return redeemInternal(redeemTokens);
     }
 
@@ -61,16 +69,16 @@ contract BEther is BToken {
      * @param redeemAmount The amount of underlying to redeem
      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
      */
-    function redeemUnderlying(uint redeemAmount) external returns (uint) {
+    function redeemUnderlying(uint256 redeemAmount) external returns (uint256) {
         return redeemUnderlyingInternal(redeemAmount);
     }
 
     /**
-      * @notice Sender borrows assets from the protocol to their own address
-      * @param borrowAmount The amount of the underlying asset to borrow
-      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
-      */
-    function borrow(uint borrowAmount) external returns (uint) {
+     * @notice Sender borrows assets from the protocol to their own address
+     * @param borrowAmount The amount of the underlying asset to borrow
+     * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
+     */
+    function borrow(uint256 borrowAmount) external returns (uint256) {
         return borrowInternal(borrowAmount);
     }
 
@@ -79,7 +87,7 @@ contract BEther is BToken {
      * @dev Reverts upon any failure
      */
     function repayBorrow() external payable {
-        (uint err,) = repayBorrowInternal(msg.value);
+        (uint256 err, ) = repayBorrowInternal(msg.value);
         requireNoError(err, "repayBorrow failed");
     }
 
@@ -89,7 +97,7 @@ contract BEther is BToken {
      * @param borrower the account with the debt being payed off
      */
     function repayBorrowBehalf(address borrower) external payable {
-        (uint err,) = repayBorrowBehalfInternal(borrower, msg.value);
+        (uint256 err, ) = repayBorrowBehalfInternal(borrower, msg.value);
         requireNoError(err, "repayBorrowBehalf failed");
     }
 
@@ -100,68 +108,79 @@ contract BEther is BToken {
      * @param borrower The borrower of this bToken to be liquidated
      * @param bTokenCollateral The market in which to seize collateral from the borrower
      */
-    function liquidateBorrow(address borrower, BToken bTokenCollateral) external payable {
-        (uint err,) = liquidateBorrowInternal(borrower, msg.value, bTokenCollateral);
+    function liquidateBorrow(address borrower, BToken bTokenCollateral)
+        external
+        payable
+    {
+        (uint256 err, ) =
+            liquidateBorrowInternal(borrower, msg.value, bTokenCollateral);
         requireNoError(err, "liquidateBorrow failed");
     }
 
     /**
-     * @notice Send Ether to BEther to mint
+     * @notice Send BNB to BBNB to mint
      */
-    function () external payable {
-        (uint err,) = mintInternal(msg.value);
+    function() external payable {
+        (uint256 err, ) = mintInternal(msg.value);
         requireNoError(err, "mint failed");
     }
 
     /*** Safe Token ***/
 
     /**
-     * @notice Gets balance of this contract in terms of Ether, before this message
+     * @notice Gets balance of this contract in terms of BNB, before this message
      * @dev This excludes the value of the current message, if any
-     * @return The quantity of Ether owned by this contract
+     * @return The quantity of BNB owned by this contract
      */
-    function getCashPrior() internal view returns (uint) {
-        (MathError err, uint startingBalance) = subUInt(address(this).balance, msg.value);
+    function getCashPrior() internal view returns (uint256) {
+        (MathError err, uint256 startingBalance) =
+            subUInt(address(this).balance, msg.value);
         require(err == MathError.NO_ERROR);
         return startingBalance;
     }
 
     /**
      * @notice Perform the actual transfer in, which is a no-op
-     * @param from Address sending the Ether
-     * @param amount Amount of Ether being sent
-     * @return The actual amount of Ether transferred
+     * @param from Address sending the BNB
+     * @param amount Amount of BNB being sent
+     * @return The actual amount of BNB transferred
      */
-    function doTransferIn(address from, uint amount) internal returns (uint) {
+    function doTransferIn(address from, uint256 amount)
+        internal
+        returns (uint256)
+    {
         // Sanity checks
         require(msg.sender == from, "sender mismatch");
         require(msg.value == amount, "value mismatch");
         return amount;
     }
 
-    function doTransferOut(address payable to, uint amount) internal {
-        /* Send the Ether, with minimal gas and revert on failure */
+    function doTransferOut(address payable to, uint256 amount) internal {
+        /* Send the BNB, with minimal gas and revert on failure */
         to.transfer(amount);
     }
 
-    function requireNoError(uint errCode, string memory message) internal pure {
-        if (errCode == uint(Error.NO_ERROR)) {
+    function requireNoError(uint256 errCode, string memory message)
+        internal
+        pure
+    {
+        if (errCode == uint256(Error.NO_ERROR)) {
             return;
         }
 
         bytes memory fullMessage = new bytes(bytes(message).length + 5);
-        uint i;
+        uint256 i;
 
         for (i = 0; i < bytes(message).length; i++) {
             fullMessage[i] = bytes(message)[i];
         }
 
-        fullMessage[i+0] = byte(uint8(32));
-        fullMessage[i+1] = byte(uint8(40));
-        fullMessage[i+2] = byte(uint8(48 + ( errCode / 10 )));
-        fullMessage[i+3] = byte(uint8(48 + ( errCode % 10 )));
-        fullMessage[i+4] = byte(uint8(41));
+        fullMessage[i + 0] = bytes1(uint8(32));
+        fullMessage[i + 1] = bytes1(uint8(40));
+        fullMessage[i + 2] = bytes1(uint8(48 + (errCode / 10)));
+        fullMessage[i + 3] = bytes1(uint8(48 + (errCode % 10)));
+        fullMessage[i + 4] = bytes1(uint8(41));
 
-        require(errCode == uint(Error.NO_ERROR), string(fullMessage));
+        require(errCode == uint256(Error.NO_ERROR), string(fullMessage));
     }
 }

@@ -9,10 +9,10 @@ module.exports = async (deployer, network) => {
     await deployer.deploy(BirdLens);
 
     if (network !== "development")
-        await verify.etherscanVerify(
+        await verify.bscscanVerify(
             BirdLens,
             network,
-            process.env.ETHERSCAN_KEY,
+            process.env.BSCSCANAPIKEY,
             1
         );
 };

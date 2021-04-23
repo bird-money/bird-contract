@@ -10,13 +10,7 @@ const JumpRateModel = artifacts.require("JumpRateModel");
 const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666";
 
 module.exports = async (deployer, network) => {
-  let LINK_TOKEN_ADDRESS = "0x514910771af9ca656af840dff83e8264ecf986ca";
-
-  //   if (network === "kovan" || "development") {
-  //     LINK_TOKEN_ADDRESS = "0x27e39557EA165Ec5388Ac9cF42690D48daC6Ebe1";
-  //   } else if (network === "mainnet") {
-  //     LINK_TOKEN_ADDRESS = "0x514910771af9ca656af840dff83e8264ecf986ca";
-  //   }
+  let LINK_TOKEN_ADDRESS = "0x5AA034CCBDFc3CF8cbDe2711bf9C3fd90B96F24B";
 
   /* Deploy Bird LINK */
   await deployer.deploy(
@@ -34,10 +28,10 @@ module.exports = async (deployer, network) => {
   );
 
   if (network !== "development")
-    await verify.etherscanVerify(
+    await verify.bscscanVerify(
       BErc20LINKDelegator,
       network,
-      process.env.ETHERSCAN_KEY,
+      process.env.BSCSCANAPIKEY,
       1
     );
 };

@@ -10,13 +10,7 @@ const JumpRateModel = artifacts.require("JumpRateModel");
 const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666";
 
 module.exports = async (deployer, network) => {
-  let ZRX_TOKEN_ADDRESS = "0xe41d2489571d322189246dafa5ebde1f4699f498";
-
-  //   if (network === "kovan" || "development") {
-  //     ZRX_TOKEN_ADDRESS = "0xdA44108a60d411B129BCF953a99013E8E4Af7503";
-  //   } else if (network === "mainnet") {
-  //     ZRX_TOKEN_ADDRESS = "0xe41d2489571d322189246dafa5ebde1f4699f498";
-  //   }
+  let ZRX_TOKEN_ADDRESS = "0x6249Cd2d84d9ABB89DD0Ef115Cd334569a50DA8C";
 
   /* Deploy Bird ZRX */
   await deployer.deploy(
@@ -25,8 +19,8 @@ module.exports = async (deployer, network) => {
     BirdCore.address,
     JumpRateModel.address,
     "200000000000000000000000000",
-    "Bird ZRX",
-    "bZRX",
+    "Bird BZRX",
+    "bBZRX",
     8,
     ADMIN_ADDRESS,
     BErc20ZRXDelegate.address,
@@ -34,10 +28,10 @@ module.exports = async (deployer, network) => {
   );
 
   if (network !== "development")
-    await verify.etherscanVerify(
+    await verify.bscscanVerify(
       BErc20ZRXDelegator,
       network,
-      process.env.ETHERSCAN_KEY,
+      process.env.BSCSCANAPIKEY,
       1
     );
 };

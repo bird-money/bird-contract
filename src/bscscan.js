@@ -1,32 +1,26 @@
 const request = require('request');
 
-function getEtherscanApiUrl(network) {
+function getBscscanApiUrl(network) {
     let host = {
-        kovan: 'api-kovan.etherscan.io',
-        rinkeby: 'api-rinkeby.etherscan.io',
-        ropsten: 'api-ropsten.etherscan.io',
-        goerli: 'api-goerli.etherscan.io',
-        mainnet: 'api.etherscan.io'
+        mainnet: 'api.bscscan.io',
+        testnet: 'api-testnet.bscscan.com'
     }[network];
 
     if (!host) {
-        throw new Error(`Unknown etherscan API host for network ${network}`);
+        throw new Error(`Unknown bscscan API host for network ${network}`);
     }
 
     return `https://${host}/api`;
 }
 
-function getEtherscanUrl(network) {
+function getBscscanUrl(network) {
     let host = {
-        kovan: 'kovan.etherscan.io',
-        rinkeby: 'rinkeby.etherscan.io',
-        ropsten: 'ropsten.etherscan.io',
-        goerli: 'goerli.etherscan.io',
-        mainnet: 'etherscan.io'
+        mainnet: 'bscscan.com',
+        testnet: 'testnet.bscscan.com'
     }[network];
 
     if (!host) {
-        throw new Error(`Unknown etherscan host for network ${network}`);
+        throw new Error(`Unknown bscscan host for network ${network}`);
     }
 
     return `https://${host}`;
@@ -57,8 +51,8 @@ function get(url, data, parser) {
 }
 
 module.exports = {
-    getEtherscanApiUrl,
-    getEtherscanUrl,
+    getBscscanApiUrl,
+    getBscscanUrl,
     post,
     get,
 }

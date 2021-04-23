@@ -5,7 +5,7 @@ const providerFactory = network =>
 
   new HDWalletProvider(
     process.env.PRIVATE_KEY,
-    `https://${network}.infura.io/v3/${process.env.INFURA_KEY}`
+    network == "testnet" ? `https://data-seed-prebsc-1-s1.binance.org:8545` : `https://bsc-dataseed.binance.org`
   );
 
 module.exports = {
@@ -20,59 +20,32 @@ module.exports = {
    */
 
   networks: {
-    // Useful for testing. The `development` name is special - truffle uses it by default
-    // if it's defined here and no other network is specified at the command line.
-    // You should run a client (like ganache-cli, geth or parity) in a separate terminal
-    // tab if you use this network and you must also set the `host`, `port` and `network_id`
-    // options below to some value.
-    //
-    // dev: {
-    //   host: "127.0.0.1",
-    //   port: 7545,
-    //   network_id: "*" // Match any network id
-    // },
-    development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port (default: none)
-      network_id: "999",       // Any network (default: none)
-      gas: 2000000000,        // Gas
-      gasPrice: 30000000
-    },
-    rinkeby: {
-      provider: () => providerFactory("rinkeby"),
-      network_id: 4,       // Ropsten's id
-      gas: 8500000,        // Ropsten has a lower block limit than mainnet
+    testnet: {
+      provider: () => providerFactory("testnet"),
+      network_id: 97,       // BSC Testnet
+      gas: 8500000,        // testnet has a lower block limit than mainnet
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true,    // Skip dry run before migrations? (default: false for public nets )
-      gasPrice: 30000000
-    },
-    kovan: {
-      provider: () => providerFactory("kovan"),
-      network_id: 42,       // Ropsten's id
-      gas: 8500000,        // Ropsten has a lower block limit than mainnet
-      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true    // Skip dry run before migrations? (default: false for public nets )
+      skipDryRun: false    // Skip dry run before migrations? (default: false for public nets )
     },
     mainnet: {
       provider: () => providerFactory("mainnet"),
-      network_id: 1,       // Ropsten's id
-      gas: 8500000,        // Ropsten has a lower block limit than mainnet
-      gasPrice: 155000000000,
+      network_id: 1,       // BSC mainnet
+      gas: 8500000,        // testnet has a lower block limit than mainnet
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true    // Skip dry run before migrations? (default: false for public nets )
-    },
+      skipDryRun: false    // Skip dry run before migrations? (default: false for public nets )
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
   mocha: {
-    // timeout: 100000
+    //timeout: 100000
   },
 
   plugins: [
     'truffle-plugin-verify'
   ],
   api_keys: {
-    etherscan: process.env.ETHERSCAN_KEY
+    etherscan: process.env.BSCSCANAPIKEYY
   },
 
   // Configure your compilers

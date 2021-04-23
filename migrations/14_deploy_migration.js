@@ -10,13 +10,7 @@ const JumpRateModel = artifacts.require("JumpRateModel");
 const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666";
 
 module.exports = async (deployer, network) => {
-  let BAT_TOKEN_ADDRESS = "0x0d8775f648430679a709e98d2b0cb6250d2887ef";
-
-  //   if (network === "kovan" || "development") {
-  //     BAT_TOKEN_ADDRESS = "0x4Ee3f6d2eb7Eb5BBCd6A45c3398802cb42931abd";
-  //   } else if (network === "mainnet") {
-  //     BAT_TOKEN_ADDRESS = "0x0d8775f648430679a709e98d2b0cb6250d2887ef";
-  //   }
+  let BAT_TOKEN_ADDRESS = "0x9C222c2bBb317cAB4103dE8D7b0D273b5e949321";
 
   /* Deploy Bird BAT */
   await deployer.deploy(
@@ -34,10 +28,10 @@ module.exports = async (deployer, network) => {
   );
 
   if (network !== "development")
-    await verify.etherscanVerify(
+    await verify.bscscanVerify(
       BErc20BATDelegator,
       network,
-      process.env.ETHERSCAN_KEY,
+      process.env.BSCSCANAPIKEY,
       1
     );
 };

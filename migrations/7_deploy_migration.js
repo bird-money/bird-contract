@@ -10,10 +10,10 @@ module.exports = async (deployer, network) => {
     await deployer.deploy(BController);
 
     if (network !== "development")
-        await verify.etherscanVerify(
+        await verify.bscscanVerify(
             BController,
             network,
-            process.env.ETHERSCAN_KEY,
+            process.env.BSCSCANAPIKEY,
             1
         );
 
@@ -25,7 +25,7 @@ module.exports = async (deployer, network) => {
     birdCoreInstance._setPendingImplementation(BController.address);
 
     bControllerInstance = await BController.deployed();
-    
+
     // Approve the implementation by calling _become in BController
     bControllerInstance._become(BirdCore.address);
 };

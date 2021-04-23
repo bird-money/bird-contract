@@ -44,7 +44,7 @@ contract SimplePriceOracle is PriceOracle {
 
         // Post prices
         for (uint256 i = 0; i < symbols.length; i++) {
-            if (compareStrings(symbols[i], "ETH")) {
+            if (compareStrings(symbols[i], "BNB")) {
                 setDirectPrice(
                     address(birdTokens[symbols[i]]),
                     priceMantissa[i]
@@ -59,7 +59,7 @@ contract SimplePriceOracle is PriceOracle {
     }
 
     function getUnderlyingPrice(BToken bToken) public view returns (uint256) {
-        if (compareStrings(bToken.symbol(), "bETH")) {
+        if (compareStrings(bToken.symbol(), "bBNB")) {
             return prices[address(bToken)];
         } else {
             return prices[address(BErc20(address(bToken)).underlying())];
@@ -88,7 +88,7 @@ contract SimplePriceOracle is PriceOracle {
         // Check caller = admin
         require(msg.sender == admin);
 
-        emit PricePosted("bETH", asset, prices[asset], price, price);
+        emit PricePosted("bBNB", asset, prices[asset], price, price);
         prices[asset] = price;
     }
 
