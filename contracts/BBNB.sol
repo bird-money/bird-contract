@@ -151,7 +151,7 @@ contract BBNB is BToken {
     {
         // Sanity checks
         require(msg.sender == from, "sender mismatch");
-        require(msg.value == amount, "value mismatch");
+        require(msg.value >= amount, "value is low");
         return amount;
     }
 

@@ -840,6 +840,7 @@ contract BToken is BTokenInterface, Exponential, TokenErrorReporter {
         uint accountBorrowsNew;
         uint totalBorrowsNew;
         uint actualRepayAmount;
+        uint extraAmount;
     }
 
     /**
@@ -879,6 +880,14 @@ contract BToken is BTokenInterface, Exponential, TokenErrorReporter {
             vars.repayAmount = repayAmount;
         }
 
+        if (vars.repayAmount > vars.accountBorrows) {
+            (vars.mathErr, vars.extraAmount) = subUInt(
+                vars.repayAmount,
+                vars.accountBorrows
+            );
+            vars.repayAmount = vars.accountBorrows;
+        }
+
         /////////////////////////
         // EFFECTS & INTERACTIONS
         // (No safe failures beyond this point)
@@ -910,6 +919,11 @@ contract BToken is BTokenInterface, Exponential, TokenErrorReporter {
 
         /* We emit a RepayBorrowToken event */
         emit RepayBorrowToken(payer, borrower, vars.actualRepayAmount, vars.accountBorrowsNew, vars.totalBorrowsNew);
+
+        /* Refund the extra amount sent to repay the borrow only if BNB */
+        if (vars.extraAmount > 0 && msg.value > 0) {
+            doTransferOut(msg.sender, vars.extraAmount);
+        }
 
         /* We call the defense hook */
         bController.repayBorrowVerify(address(this), payer, borrower, vars.actualRepayAmount, vars.borrowerIndex);

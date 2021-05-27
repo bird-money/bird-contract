@@ -18,7 +18,7 @@ module.exports = async (deployer, network) => {
         WBTC_TOKEN_ADDRESS,
         BirdCore.address,
         JumpRateModel.address,
-        "20000000000000000",
+        "200000000000000000000000000",
         "Bird WBTC",
         "bWBTC",
         8,
