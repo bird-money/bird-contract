@@ -6,7 +6,7 @@ const BErc20BIRDDelegate = artifacts.require("BErc20BIRDDelegate");
 module.exports = async (deployer, network) => {
 
     /* Deploy Bird BErc20BIRDDelegate */
-    await deployer.deploy(BErc20BIRDDelegate);
+    /*await deployer.deploy(BErc20BIRDDelegate);
 
     if (network !== "development")
         await verify.bscscanVerify(
@@ -14,5 +14,5 @@ module.exports = async (deployer, network) => {
             network,
             process.env.BSCSCANAPIKEY,
             1
-        );
+        ); */
 };

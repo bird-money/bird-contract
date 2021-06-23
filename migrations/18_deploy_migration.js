@@ -13,7 +13,7 @@ module.exports = async (deployer, network) => {
   let ZRX_TOKEN_ADDRESS = "0x6249Cd2d84d9ABB89DD0Ef115Cd334569a50DA8C";
 
   /* Deploy Bird ZRX */
-  await deployer.deploy(
+  /*await deployer.deploy(
     BErc20ZRXDelegator,
     ZRX_TOKEN_ADDRESS,
     BirdCore.address,
@@ -33,5 +33,5 @@ module.exports = async (deployer, network) => {
       network,
       process.env.BSCSCANAPIKEY,
       1
-    );
+    ); */
 };

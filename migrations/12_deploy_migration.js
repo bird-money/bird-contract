@@ -13,7 +13,7 @@ module.exports = async (deployer, network) => {
   let USDT_TOKEN_ADDRESS = "0xe93e5891b1b757D51D20448F2803Db4Cd6f84233";
 
   /* Deploy Bird USDT */
-  await deployer.deploy(
+  /*await deployer.deploy(
     BErc20Delegator,
     USDT_TOKEN_ADDRESS,
     BirdCore.address,
@@ -33,5 +33,5 @@ module.exports = async (deployer, network) => {
       network,
       process.env.BSCSCANAPIKEY,
       1
-    );
+    );*/
 };

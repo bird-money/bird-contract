@@ -10,7 +10,7 @@ const JumpRateModel = artifacts.require("JumpRateModel");
 const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666";
 
 module.exports = async (deployer, network) => {
-  let BAT_TOKEN_ADDRESS = "0x9C222c2bBb317cAB4103dE8D7b0D273b5e949321";
+  let BAT_TOKEN_ADDRESS = "0x101d82428437127bf1608f699cd651e6abf9766e";
 
   /* Deploy Bird BAT */
   await deployer.deploy(

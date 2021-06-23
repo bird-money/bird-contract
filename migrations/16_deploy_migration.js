@@ -13,7 +13,7 @@ module.exports = async (deployer, network) => {
     let WBTC_TOKEN_ADDRESS = "0x3E090FfB054d69c32f8129D55F64B0047224204F";
 
     /* Deploy Bird WBTC */
-    await deployer.deploy(
+    /*await deployer.deploy(
         BErc20WBTCDelegator,
         WBTC_TOKEN_ADDRESS,
         BirdCore.address,
@@ -33,5 +33,5 @@ module.exports = async (deployer, network) => {
             network,
             process.env.BSCSCANAPIKEY,
             1
-        );
+        ); */
 };

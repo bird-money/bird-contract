@@ -1,0 +1,72 @@
+
+Add BController (address) as pending implementation in BirdCore contract from admin account
+Approved the implementation by calling _become (birdCore address) in BController contract from admin account
+
+USDC Token : 0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d
+USDT Token : 0xe93e5891b1b757D51D20448F2803Db4Cd6f84233 (need to find)
+BAT Token : 0x101d82428437127bf1608f699cd651e6abf9766e
+WBTC Token : 0x3E090FfB054d69c32f8129D55F64B0047224204F (need to find)
+bBZRX Token : 0x6249Cd2d84d9ABB89DD0Ef115Cd334569a50DA8C (need to find)
+LINK Token : 0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd 
+BIRD Token : 0x2646fd659e961164bf9de7c7131a651c020b325c (need to list and add)
+
+bUSDC Token (BErc20USDCDelegator): 0xdb982C644249DA19b40Ddf3326dD72Cea8790065
+bBAT Token (BErc20BATDelegator): 0x87737098A5912395464e97F21B220978c581fb83
+bBNB Token (BBNB): 0xc69565bcB8a8E6fe188095111c61bce270053348
+bLINK Token (BErc20LINKDelegator): 0x43AD214534d8A1edBa86f49840D1a9C8d043a9b9
+
+    - set reserve factor for bTokens
+        0xdb982C644249DA19b40Ddf3326dD72Cea8790065, 50000000000000000
+        0x87737098A5912395464e97F21B220978c581fb83, 500000000000000000
+        0xc69565bcB8a8E6fe188095111c61bce270053348, 100000000000000000
+        0x43AD214534d8A1edBa86f49840D1a9C8d043a9b9, 100000000000000000
+
+
+Deploy BirdPlus: 0x73F96c6Cf07bd820522aCA87845678060fc86923
+    Arg: 0x60b6a57b71f23a8c602eD71b60272FdA321D2666, 0x23249E7026A8EA43ed88f4581647187c029C6c2f, 0x60b6a57b71f23a8c602eD71b60272FdA321D2666, 0x60b6a57b71f23a8c602eD71b60272FdA321D2666, 0x60b6a57b71f23a8c602eD71b60272FdA321D2666, 0x60b6a57b71f23a8c602eD71b60272FdA321D2666, 1624991400
+
+---------------------------------------------------------------
+
+Setting up the markets (from the admin account)
+
+SimplePriceOracle: 0xEC3583c18339A841eb5faa3F028Df2920b797F44
+
+    - call initaliseTokens (symbols[], address[])
+            ["USDC", "BAT", "BNB", "LINK"], [0xdb982C644249DA19b40Ddf3326dD72Cea8790065, 0x87737098A5912395464e97F21B220978c581fb83, 0xc69565bcB8a8E6fe188095111c61bce270053348, 0x43AD214534d8A1edBa86f49840D1a9C8d043a9b9]
+
+    - call postPrices(symbols[], prices[])
+            ["USDC", "BAT", "BNB", "LINK"], [1000000000000000000,330000000000000000,538676000000000000000,29520000000000000000]
+
+BirdCore: 0x23249E7026A8EA43ed88f4581647187c029C6c2f (Write as Proxy)
+    - Make this contract as Proxy Contract to access the BController contract as implementation
+    - call _setMaxAssets(maxAssets) to set the maximum numbers assets can be listed in the market
+        10
+    - call _setCloseFactor(closeFactorMantissa) 
+        500000000000000000
+    - call _setBirdPlusAddress(birdPlusContract)
+        0x73F96c6Cf07bd820522aCA87845678060fc86923
+    - call _setBirdPlusRate(birdRate)
+        176000000000000000
+    - call _setBirdOracle
+        0x6dEC0b87970b066d36CcF9F05456d52c95B072C1  TODO: update new address
+    - call _setLiquidationIncentive
+        1080000000000000000
+    - call _setPriceOracle(simplePriceOracle) 
+        0xEC3583c18339A841eb5faa3F028Df2920b797F44
+    - call _supportMarket(bToken) to add the bToken to the market
+        0xdb982C644249DA19b40Ddf3326dD72Cea8790065
+        0x87737098A5912395464e97F21B220978c581fb83
+        0xc69565bcB8a8E6fe188095111c61bce270053348
+        0x43AD214534d8A1edBa86f49840D1a9C8d043a9b9
+    - call _setCollateralFactor(bToken, collateralFactorMantissa)
+        0xdb982C644249DA19b40Ddf3326dD72Cea8790065, 750000000000000000
+        0x87737098A5912395464e97F21B220978c581fb83, 600000000000000000
+        0xc69565bcB8a8E6fe188095111c61bce270053348, 750000000000000000
+        0x43AD214534d8A1edBa86f49840D1a9C8d043a9b9, 750000000000000000
+
+    - call _addBirdMarkets([bToken]) to make selected the bTokens to be listed in the market
+        [0xdb982C644249DA19b40Ddf3326dD72Cea8790065, 0x87737098A5912395464e97F21B220978c581fb83, 0xc69565bcB8a8E6fe188095111c61bce270053348, 0x43AD214534d8A1edBa86f49840D1a9C8d043a9b9]
+BirdCore [Read as Proxy]
+    - Verify whether bTokens are listed in the market by calling getAllMarkets and markets(bToken)
+
+Price Admin: 0x58b2F4a75448D83CF153cE07C2A6f6F273339745

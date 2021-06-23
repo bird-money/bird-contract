@@ -10,7 +10,7 @@ const JumpRateModel = artifacts.require("JumpRateModel");
 const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666";
 
 module.exports = async (deployer, network) => {
-  let LINK_TOKEN_ADDRESS = "0x5AA034CCBDFc3CF8cbDe2711bf9C3fd90B96F24B";
+  let LINK_TOKEN_ADDRESS = "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd";
 
   /* Deploy Bird LINK */
   await deployer.deploy(

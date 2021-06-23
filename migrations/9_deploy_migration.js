@@ -10,7 +10,7 @@ const JumpRateModel = artifacts.require("JumpRateModel");
 const ADMIN_ADDRESS = "0x60b6a57b71f23a8c602eD71b60272FdA321D2666";
 
 module.exports = async (deployer, network) => {
-  let USDC_TOKEN_ADDRESS = "0x7d0adFbBF7487E50e9A7B57d3DAFea393B400EeD";
+  let USDC_TOKEN_ADDRESS = "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d";
 
   /* Deploy Bird USDC */
   await deployer.deploy(
