@@ -29,7 +29,7 @@ module.exports = {
     },
     mainnet: {
       provider: () => providerFactory("mainnet"),
-      network_id: 1,       // BSC mainnet
+      network_id: 56,       // BSC mainnet
       gas: 8500000,        // testnet has a lower block limit than mainnet
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: false    // Skip dry run before migrations? (default: false for public nets )

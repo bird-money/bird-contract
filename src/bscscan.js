@@ -2,7 +2,7 @@ const request = require('request');
 
 function getBscscanApiUrl(network) {
     let host = {
-        mainnet: 'api.bscscan.io',
+        mainnet: 'api.bscscan.com',
         testnet: 'api-testnet.bscscan.com'
     }[network];
 
